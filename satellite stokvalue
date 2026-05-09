@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+int main(){
+    srand(time(NULL));
+
+    double satellite_value = 100.0; // Value of each satellite in millions
+    double stock_value = 100.0; // Initial stock price
+    double decay_rate = 0.02; // 2% decay rate per year
+    double volatility = 0.05; // 5% volatility
+    int days = 30;
+
+    printf("Day | Satellite (Decay) | Stock (Random)\n");
+    printf("----------------------------------------\n");
+
+    for (int i = 1; i <= days; i++) {
+        
+        // SATELLITE MATH: Predictable decay
+        satellite_value -= (satellite_value * decay_rate);
+
+        // STOCK MATH: Random jump (+5% or -5%)
+        // (rand() % 2) gives either 0 or 1
+        if (rand() % 2 == 0) {
+            stock_value += (stock_value * volatility); // Stock goes UP
+        } else {
+            stock_value -= (stock_value * volatility); // Stock goes DOWN
+        }
+
+        printf("%3d | %17.2f | %14.2f\n", i, satellite_value, stock_value);
+    }
+
+    return 0;
+}
